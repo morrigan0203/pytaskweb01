@@ -26,3 +26,8 @@ def found_title():
 def new_title():
     return "new_title"
 
+
+@pytest.fixture()
+def new_description():
+    return "new_description"
+

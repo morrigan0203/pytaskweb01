@@ -11,7 +11,7 @@ def auth():
     return r.json()["token"], r.status_code
 
 
-def get_title_posts_page(token, page, not_own=True):
+def get_data_posts_page(token, page, not_own=True):
     res = []
     req_data = {"order": "DESC", "page": page}
     if not_own:
@@ -23,8 +23,22 @@ def get_title_posts_page(token, page, not_own=True):
     next = j["meta"]["nextPage"]
     count = j["meta"]["count"]
 
+    return posts, next, count
+
+
+def get_title_posts_page(token, page, not_own=True):
+    res = []
+    posts, next, count = get_data_posts_page(token, page, not_own)
     for i in range(len(posts)):
         res.append(posts[i]["title"])
+    return res, next, count
+
+
+def get_description_posts_page(token, page, not_own=True):
+    res = []
+    posts, next, count = get_data_posts_page(token, page, not_own)
+    for i in range(len(posts)):
+        res.append(posts[i]["description"])
     return res, next, count
 
 
